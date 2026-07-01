@@ -16,25 +16,27 @@ const Dashboard = ({ onLogout }) => {
   }, []);
 
   const fetchAllData = async () => {
-    try {
-      const kpisResponse = await fetch('http://localhost:5000/api/kpis');
-      const kpisData = await kpisResponse.json();
-      setKpis(kpisData);
+  try {
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-      const salesResponse = await fetch('http://localhost:5000/api/sales');
-      const salesData = await salesResponse.json();
-      setSales(salesData);
+    const kpisResponse = await fetch(`${API_URL}/api/kpis`);
+    const kpisData = await kpisResponse.json();
+    setKpis(kpisData);
 
-      const categoriesResponse = await fetch('http://localhost:5000/api/categories');
-      const categoriesData = await categoriesResponse.json();
-      setCategories(categoriesData);
+    const salesResponse = await fetch(`${API_URL}/api/sales`);
+    const salesData = await salesResponse.json();
+    setSales(salesData);
 
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
-    }
-  };
+    const categoriesResponse = await fetch(`${API_URL}/api/categories`);
+    const categoriesData = await categoriesResponse.json();
+    setCategories(categoriesData);
+
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return (
